@@ -1,0 +1,348 @@
+#include <iostream>
+using namespace std;
+class libraryitem
+{
+
+    int id;
+    string title;
+    string author;
+    string dueDate;
+
+public:
+    // virtual void checkOut() = 0;
+    // virtual void returnItem() = 0;
+    virtual void displayDetails() = 0;
+
+    string getTitle() { return title; }
+
+    string getAuthor() { return author; }
+
+    string getDueDate() { return dueDate; }
+
+    void setTitle(string newTitle) { title = newTitle; }
+
+    void setAuthor(string newAuthor) { author = newAuthor; }
+
+    void setDueDate(string newDueDate) { dueDate = newDueDate; }
+    void setId(int newTitle) { id = newTitle; }
+    int getid()
+    {
+        return id;
+    }
+
+    void time(string a)
+    {
+        if (a < dueDate)
+        {
+            cout << "Your duration is not over";
+        }
+        else
+        {
+            cout << "Your duration is over!!!";
+        }
+        cout << "name : " << dueDate;
+    }
+};
+
+class book : public libraryitem
+{
+
+    string title;
+    string author;
+    string dueDate;
+
+public:
+    void input()
+    {
+
+        try
+        {
+            cout << "BOOK ID : ";
+            int a;
+            cin >> a;
+            setId(a);
+            if (getid() < 0)
+            {
+                throw getid();
+            }
+        }
+        catch (int id)
+        {
+            cout << id << "?? MUST BE IN POSITIVE NUMBER." << endl;
+        }
+
+        cout << "ENTER TITLE OF THE BOOK : ";
+        cin >> title;
+
+        setTitle(title);
+
+        cout << "AUTHOR NAME : ";
+        cin >> author;
+
+        setAuthor(author);
+
+        cout << "RETURN BOOK DATE (DD/MM/YYYY) : ";
+        cin >> dueDate;
+
+        setDueDate(dueDate);
+    }
+
+    void displayDetails()
+    {
+        cout << "--BOOK DETAILS--" << endl;
+        cout << "ID : " << getid() << endl
+             << "Title : " << title << endl
+             << "Author : " << author << endl
+             << "Due date : " << dueDate << endl;
+    }
+};
+
+class DVD : public libraryitem
+{
+    string title;
+    int id;
+    string duedate;
+
+public:
+    void input()
+    {
+
+        cout << "ID : ";
+        cin >> id;
+        setId(id);
+
+        cout << "TITLE : ";
+        cin >> title;
+
+        setTitle(title);
+
+        cout << "DUE DATE : ";
+        cin >> duedate;
+
+        setDueDate(duedate);
+    }
+
+    void displayDetails()
+    {
+        cout << "--DVD DETAILS--" << endl;
+        cout << "ID : " << id << endl
+             << "Title : " << title << endl
+             << "Due date : " << duedate << endl;
+    }
+};
+
+class magazine : public libraryitem
+{
+    string title;
+    int id;
+    string duedate;
+
+public:
+    void input()
+    {
+
+        cout << "ID : ";
+        cin >> id;
+        setId(id);
+
+        cout << "TITLE : ";
+        cin >> title;
+
+        setTitle(title);
+
+        cout << "DUE DATE : ";
+        cin >> duedate;
+
+        setDueDate(duedate);
+    }
+
+    void displayDetails()
+    {
+        cout << "--MAGZINE DETAILS--" << endl;
+        cout << "ID : " << id << endl
+             << "Title : " << title << endl
+             << "Due date : " << duedate << endl;
+    }
+};
+
+class items
+{
+    libraryitem *libraryitems[100];
+
+    int libraryitemscount = 0;
+
+    book books[100];
+    int bookscount = 0;
+
+    DVD dvds[100];
+    int dvdscount = 0;
+
+    magazine magazines[100];
+    int magazinescount = 0;
+
+public:
+    void inputbook()
+    {
+
+        int num;
+        cout << "How many books do you want to add ?";
+        cin >> num;
+
+        for (int i = 0; i < num; i++)
+        {
+            book t;
+            t.input();
+            books[bookscount] = t;
+            libraryitems[libraryitemscount] = &books[bookscount];
+
+            bookscount++;
+            libraryitemscount++;
+        }
+    }
+
+    void inputdvd()
+    {
+        int num;
+        cout << "How many books do you want to add ?";
+        cin >> num;
+        for (int i = 0; i < num; i++)
+        {
+            DVD a;
+            a.input();
+            dvds[dvdscount] = a;
+            libraryitems[libraryitemscount] = &dvds[dvdscount];
+
+            dvdscount++;
+            libraryitemscount++;
+        }
+    }
+
+    void inputmag()
+    {
+        int num;
+        cout << "How many books do you want to add ?";
+        cin >> num;
+        for (int i = 0; i < num; i++)
+        {
+            magazine a;
+            a.input();
+            magazines[magazinescount] = a;
+            libraryitems[libraryitemscount] = &magazines[magazinescount];
+            magazinescount++;
+            libraryitemscount++;
+        }
+    }
+
+    void search(int id)
+    {
+        int temp = 0;
+
+        for (int i = 0; i < libraryitemscount; i++)
+        {
+
+            if (libraryitems[i]->getid() == id)
+            {
+                libraryitems[i]->displayDetails();
+                temp = 1;
+                break;
+            }
+        }
+
+        if (temp == 0)
+        {
+            cout << "DATA NOT FOUND !!!..";
+        }
+    }
+
+    void displayall()
+    {
+        for (int i = 0; i < libraryitemscount; i++)
+        {
+            libraryitems[i]->displayDetails();
+        }
+    }
+
+    void Duration(int id)
+    {
+        string date;
+        int temp = 0;
+
+        cout << "Enter current date : ";
+        cin >> date;
+        for (int i = 0; i < libraryitemscount; i++)
+        {
+
+            if (libraryitems[i]->getid() == id)
+            {
+                libraryitems[libraryitemscount]->time(date);
+                temp = 1;
+                break;
+            }
+        }
+
+        if (temp == 0)
+        {
+            cout << "DATA NOT FOUND !!!..";
+        }
+    }
+};
+int main()
+{
+    items registery;
+    int choice, num;
+
+    do
+    {
+        cout << "1.GET BOOK\n2.GET DVD\n3.GET MAGAZINE\n4.SEARCH ITEMS BY ITS ID\n5.DISPLAY ALL DATA\n0.EXIT" << endl;
+        cout << "CHOICE :";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+        {
+
+            registery.inputbook();
+        }
+        break;
+
+        case 2:
+        {
+            registery.inputdvd();
+        }
+        break;
+
+        case 3:
+        {
+            registery.inputmag();
+        }
+        break;
+
+        case 4:
+        {
+            cout << "ENTER AN ID TO SEARCH : ";
+            cin >> num;
+            registery.search(num);
+        }
+        break;
+
+        case 5:
+        {
+            registery.displayall();
+        }
+        break;
+
+        case 0:
+        {
+            cout << "You are exitying from windows ...." << endl;
+        }
+        break;
+
+        default:
+            cout << "Invalid choice!!";
+            break;
+        }
+    } while (choice != 0);
+
+    return 0;
+}
