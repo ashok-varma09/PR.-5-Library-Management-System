@@ -1,5 +1,13 @@
 #include <iostream>
+#include <time.h>
 using namespace std;
+class Date
+{
+    int day, month, year;
+    Date()
+    {
+    }
+};
 class libraryitem
 {
 
@@ -9,6 +17,9 @@ class libraryitem
     string dueDate;
 
 public:
+
+
+    
     // virtual void checkOut() = 0;
     // virtual void returnItem() = 0;
     virtual void displayDetails() = 0;
@@ -24,7 +35,7 @@ public:
     void setAuthor(string newAuthor) { author = newAuthor; }
 
     void setDueDate(string newDueDate) { dueDate = newDueDate; }
-    void setId(int newTitle) { id = newTitle; }
+    void setId(int ids) { id = ids; }
     int getid()
     {
         return id;
@@ -94,6 +105,10 @@ public:
              << "Title : " << title << endl
              << "Author : " << author << endl
              << "Due date : " << dueDate << endl;
+    }
+
+    void checkOut()
+    {
     }
 };
 
@@ -284,6 +299,10 @@ public:
         {
             cout << "DATA NOT FOUND !!!..";
         }
+    }
+
+    void calculate()
+    {
     }
 };
 int main()
